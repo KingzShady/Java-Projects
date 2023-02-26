@@ -4,7 +4,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * This class performs MD5 hashing on a message.
  */
-public class MD5Hash {
+public class MD5HASH {
     private String message;
     private String digest;
 
@@ -13,7 +13,7 @@ public class MD5Hash {
      *
      * @param message the message to hash
      */
-    public MD5Hash(String message) {
+    public MD5HASH(String message) {
         this.message = message;
     }
 
