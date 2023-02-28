@@ -24,5 +24,18 @@ public class main {
 
         // Print the hashed message to the console
         System.out.println("The hashed message is: " + md5Hash.getDigest());
+
+        // Create a TripleDES object and encrypt the user's message
+        TripleDES tripleDES = new TripleDES(userInput.getMessage());
+        byte[] encryptedMessage = tripleDES.encrypt();
+
+        // Print the encrypted message to the console
+        System.out.println("The encrypted message is: " + new String(encryptedMessage));
+
+        // Decrypt the encrypted message
+        byte[] decryptedMessage = tripleDES.decrypt();
+
+        // Print the decrypted message to the console
+        System.out.println("The decrypted message is: " + new String(decryptedMessage));
     }
 }
