@@ -6,7 +6,7 @@ import java.util.Scanner;
  * and prints the hashed message to the console.
  */
 public class main {
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
         // Prompt the user to enter a message to hash
@@ -27,7 +27,7 @@ public class main {
 
         // Create a TripleDES object and encrypt the user's message
         TripleDES tripleDES = new TripleDES(userInput.getMessage());
-        byte[] encryptedMessage = tripleDES.encrypt();
+        byte[] encryptedMessage = tripleDES.encrypt(message);
 
         // Print the encrypted message to the console
         System.out.println("The encrypted message is: " + new String(encryptedMessage));

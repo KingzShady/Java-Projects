@@ -27,8 +27,20 @@ public class TripleDES {
      *
      * @throws NoSuchAlgorithmException if the TripleDES algorithm is not available
      */
-    public byte[] encrypt() throws NoSuchAlgorithmException {
+    public byte[] encrypt(String message) throws NoSuchAlgorithmException, Exception {
         // TODO: Implement encryption using Triple DES algorithm
+
+        // Create a SecretKey object using the Triple DES algorithm
+        SecretKey key = KeyGenerator.getInstance("DeSede").generateKey();
+
+        // Initialize a Cipher object with the Triple DES algorithm in ECB mode
+        Cipher cipher = Cipher.getInstance("DeSede/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        // Encrypt the message using the initialized Cipher object
+        byte[] messageBytes = message.getBytes("UTF-8");
+        encryptedMessage = cipher.doFinal(messageBytes);
+
         return encryptedMessage;
     }
 
