@@ -61,6 +61,16 @@ public class TravelingSalesmanProblem {
         // Changing the edges color to red
         graphics2D.setColor(Color.RED);
 
+        // Finding the shortest route and coloring its edges green
+        int[] shortestRoute = getShortestRoute();
+        graphics2D.setColor(Color.GREEN);
+        for(int i = 0; i < numNodes - 1; i++){
+
+            int node1 = shortestRoute[i];
+            int node2 = shortestRoute[i + 1];
+            graphics2D.drawLine(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y);
+        }
+
         // Based on the distances between the nodes, draw the edges between them.
         for (int i = 0; i < numNodes; i++) {
             for (int j = i+1; j < numNodes; j++) {
@@ -123,4 +133,66 @@ public class TravelingSalesmanProblem {
             findRoutes(nextNode, newNode, distances, newRoute, routes);
         }
     }
+
+
+    /* Caculating the Shortest Path Functions */
+    // Functions that calculate the distance of a given route
+    private static int getRouteDistance(int[] route){
+        int distance = distances[startNode][route[0]];
+        for(int i = 0; i < numNodes - 2; i++){
+            distance += distances[startNode][route[0]];
+        }
+        distance += distances[route[numNodes-2]][startNode];
+
+        return distance;
+    }
+
+    // Function to find the shortest route
+    private static int[] getShortestRoute(){
+        int[] shortestRoute = new int[numNodes - 1];
+        int[] currentRoute = new int[numNodes - 1];
+        for(int i = 0; i < numNodes - 1; i++){
+            currentRoute[i] = Nodes.get(i);
+        }
+        int shortestDistance = getRouteDistance(currentRoute);
+        System.arraycopy(currentRoute, 0, shortestRoute, 0, numNodes - 1);
+        while(getNextPermutation(currentRoute)){
+            int currentDistance = getRouteDistance(currentRoute);
+            if(currentDistance < shortestDistance){
+                shortestDistance = currentDistance;
+                System.arraycopy(currentRoute, 0, shortestRoute, 0, numNodes-1);
+            }
+        }
+        return shortestRoute;
+    
+    }
+
+    // Function to determine the next permutation of an integer array.
+    private static boolean getNextPermutation(int[] array){
+        int i = array.length -2;
+        while( i >= 0 && array[i] >= array[i+1]){
+            i--;
+        }
+        if(i < 0){
+            return false;
+        }
+        int j = array.length -1;
+        while (array[j] <= array[i]) { 
+            j--;
+        }
+        int temp = array[i];
+        array[i] = array[j];
+        array[i] = temp;
+        int start  = i + 1;
+        int end = array.length -1;
+        while(start < end){
+            temp = array[temp];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
 }
