@@ -45,7 +45,7 @@ public class TravelingSalesmanProblem {
         graphics2D.setColor(Color.WHITE);
         graphics2D.fillRect(0, 0, imageSize, imageSize);
 
-        // Changing the nodes' and edges' color to blue
+        // Changing the nodes color to blue
         graphics2D.setColor(Color.BLUE);
         
         // Calculating each node's coordinates depending on its index and the total number of nodes
@@ -57,6 +57,9 @@ public class TravelingSalesmanProblem {
             nodeCoords[i] = new Point(x, y);
             graphics2D.fillOval(x-5, y-5, 10, 10);
         }
+
+        // Changing the edges color to red
+        graphics2D.setColor(Color.RED);
 
         // Based on the distances between the nodes, draw the edges between them.
         for (int i = 0; i < numNodes; i++) {
