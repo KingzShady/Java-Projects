@@ -68,7 +68,7 @@ public class TravelingSalesmanProblem {
         graphics2D.setColor(Color.GREEN);
         for(int i = 0; i < numNodes; i++){
             int node1 = shortestRoute[i];
-            int node2 = shortestRoute[(i+1)%numNodes];
+            int node2 = shortestRoute[i+1];
             graphics2D.drawLine(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y);
         }
 
