@@ -132,7 +132,7 @@ public class TravelingSalesmanProblem {
         }
         int temp = array[i];
         array[i] = array[j];
-        array[i] = temp;
+        array[j] = temp;
         int start  = i + 1;
         int end = array.length -1;
         while(start < end){
