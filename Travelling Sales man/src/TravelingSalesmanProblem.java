@@ -1,5 +1,4 @@
 //Imports for the problem
-import java.util.*;
 import java.util.Vector;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -51,11 +50,11 @@ public class TravelingSalesmanProblem {
         // Calculating each node's coordinates depending on its index and the total number of nodes
         Point[] nodeCoords = new Point[numNodes];
         for (int i = 0; i < numNodes; i++) {
-            double angle = (double)i / (double)numNodes*2.0*Math.PI;
+            double angle = (double) i / (double) numNodes * 2.0 * Math.PI;
             int x = (int) (Math.cos(angle) * imageSize * 0.4 + imageSize * 0.5);
             int y = (int) (Math.sin(angle) * imageSize * 0.4 + imageSize * 0.5);
             nodeCoords[i] = new Point(x, y);
-            graphics2D.fillOval(x-5, y-5, 10, 10);
+            graphics2D.fillOval(x - 5, y - 5, 10, 10);
         }
 
         // Changing the edges color to red
@@ -65,9 +64,8 @@ public class TravelingSalesmanProblem {
         int[] shortestRoute = getShortestRoute();
         graphics2D.setColor(Color.GREEN);
         for(int i = 0; i < numNodes - 1; i++){
-
             int node1 = shortestRoute[i];
-            int node2 = shortestRoute[i + 1];
+            int node2 = shortestRoute[i+1];
             graphics2D.drawLine(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y);
         }
 
@@ -86,71 +84,23 @@ public class TravelingSalesmanProblem {
         frame.getContentPane().add(label, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
-
-        /* Finding all the routes */
-        // Creating a vector to store all routes found
-        Vector<Vector<Integer>> routes = new Vector<Vector<Integer>>();
-
-        // Creating a vector to store all the nodes that have been visited
-        Vector <Integer> currentRoute = new Vector<Integer>();
-        currentRoute.add(startNode);
-
-        // Continually finding all routes
-        findRoutes(startNode, Nodes, distances, currentRoute, routes);
-
-        // Printing all the routes
-        System.out.println("All the routes are: " + routes);
-
-
     }
-
-    /* Method used to find all the routes between the nodes */
-    public static void findRoutes(int currentNode, Vector<Integer> nodes,
-    int[][] distances, Vector<Integer> currentRoute, Vector<Vector<Integer>> routes) {
-        // Add the current node to the route and the finished route to the vector of all routes if there are no more nodes to add.
-        if (nodes.size() == 0) {
-            currentRoute.add(currentNode);
-            routes.add(currentRoute);
-            return;
-        }
-
-        // Looping over all remaining nodes
-        for (int i = 0 ; i < nodes.size(); i++) {
-            int nextNode = nodes.get(i);
-
-            // Removing the current node to create a new set of remaining nodes
-            Vector<Integer> newNode = new Vector<Integer>(nodes);
-            newNode.removeElementAt(i);
-
-            // Creating a fresh route by adding the current node
-            Vector<Integer> newRoute = new Vector<Integer>(currentRoute);
-            newRoute.add(nextNode);
-
-            // Finding the separation between the current node and the following node
-            int newDistance = distances[currentNode][nextNode];
-
-            // Calling findRoutes recursively with the updated current node, updated nodes that are left, and updated route
-            findRoutes(nextNode, newNode, distances, newRoute, routes);
-        }
-    }
-
 
     /* Caculating the Shortest Path Functions */
     // Functions that calculate the distance of a given route
     private static int getRouteDistance(int[] route){
         int distance = distances[startNode][route[0]];
         for(int i = 0; i < numNodes - 2; i++){
-            distance += distances[startNode][route[0]];
+            distance += distances[route[i]][route[i+1]];
         }
         distance += distances[route[numNodes-2]][startNode];
-
         return distance;
     }
 
     // Function to find the shortest route
     private static int[] getShortestRoute(){
-        int[] shortestRoute = new int[numNodes - 1];
-        int[] currentRoute = new int[numNodes - 1];
+        int[] shortestRoute = new int[numNodes-1];
+        int[] currentRoute = new int[numNodes-1];
         for(int i = 0; i < numNodes - 1; i++){
             currentRoute[i] = Nodes.get(i);
         }
@@ -186,7 +136,7 @@ public class TravelingSalesmanProblem {
         int start  = i + 1;
         int end = array.length -1;
         while(start < end){
-            temp = array[temp];
+            temp = array[start];
             array[start] = array[end];
             array[end] = temp;
             start++;
