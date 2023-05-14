@@ -32,6 +32,9 @@ public class TravelingSalesmanProblem {
             }
         }
 
+        // return early if there are less than 2 nodes
+        if(numNodes < 2) return;
+
         /* Producing a picture with the proper proportions */ 
         // Seting image dimensions
         int imageSize = 500;
@@ -63,9 +66,9 @@ public class TravelingSalesmanProblem {
         // Finding the shortest route and coloring its edges green
         int[] shortestRoute = getShortestRoute();
         graphics2D.setColor(Color.GREEN);
-        for(int i = 0; i < numNodes - 1; i++){
+        for(int i = 0; i < numNodes; i++){
             int node1 = shortestRoute[i];
-            int node2 = shortestRoute[i+1];
+            int node2 = shortestRoute[(i+1)%numNodes];
             graphics2D.drawLine(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y);
         }
 
