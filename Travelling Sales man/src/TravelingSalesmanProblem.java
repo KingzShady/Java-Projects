@@ -66,11 +66,12 @@ public class TravelingSalesmanProblem {
         // Finding the shortest route and coloring its edges green
         int[] shortestRoute = getShortestRoute();
         graphics2D.setColor(Color.GREEN);
-        for(int i = 0; i < numNodes; i++){
+        for (int i = 0; i < numNodes - 1; i++) {
             int node1 = shortestRoute[i];
             int node2 = shortestRoute[i+1];
             graphics2D.drawLine(nodeCoords[node1].x, nodeCoords[node1].y, nodeCoords[node2].x, nodeCoords[node2].y);
         }
+        
 
         // Based on the distances between the nodes, draw the edges between them.
         for (int i = 0; i < numNodes; i++) {
