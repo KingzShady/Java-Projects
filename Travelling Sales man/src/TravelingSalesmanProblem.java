@@ -1,4 +1,5 @@
 //Imports for the problem
+import java.util.Random;
 import java.util.Vector;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,16 +8,11 @@ import javax.swing.*;
 
 public class TravelingSalesmanProblem {
 
-    // Defining the distances between nodes in the problem
-    public static  int [][] distances = {
-        {0,10,15,20},
-        {10,0,35,25},
-        {15,35,0,30},
-        {20,25,30,0}
-    };
-
     // Defining the number of nodes in the problem
-    public static int numNodes = distances.length;
+    public static int numNodes;
+
+    // Defining the distances between nodes in the problem
+    public static  int [][] distances;
 
     // Defining the starting node
     public static int startNode = 0;
@@ -25,6 +21,13 @@ public class TravelingSalesmanProblem {
     private static Vector<Integer> Nodes = new Vector<Integer>();
 
     public static void main(String[] args) {
+
+         // Generate a random number of nodes between 5 and 50
+         numNodes = new Random().nextInt(46) + 5;
+
+         // Generate random distances between nodes
+         generateRandomDistances();
+
         // Adding all nodes except the starting node to the vector
         for (int i = 0; i < numNodes; i++) {
             if (i != startNode) {
@@ -33,12 +36,15 @@ public class TravelingSalesmanProblem {
         }
 
         // return early if there are less than 2 nodes
-        if(numNodes < 2) return;
+        if(numNodes < 2){
+            return;
+        }
+        
 
         /* Producing a picture with the proper proportions */ 
         // Seting image dimensions
         int imageSize = 500;
-        BufferedImage image = new BufferedImage(imageSize,imageSize, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB);
 
         // Making a drawing on the image using the graphics object
         Graphics2D graphics2D = image.createGraphics();
@@ -81,7 +87,10 @@ public class TravelingSalesmanProblem {
                 }
             }
         }
-
+        
+        // Number of noes in the Image
+        System.out.println("Number of nodoes in the distance: " + numNodes);
+        
         // Creating a JFrame for the image to be shown
         JFrame frame = new JFrame();
         JLabel label = new JLabel(new ImageIcon(image));
@@ -91,6 +100,7 @@ public class TravelingSalesmanProblem {
     }
 
     /* Caculating the Shortest Path Functions */
+
     // Functions that calculate the distance of a given route
     private static int getRouteDistance(int[] route){
         int distance = distances[startNode][route[0]];
@@ -147,6 +157,19 @@ public class TravelingSalesmanProblem {
             end--;
         }
         return true;
+    }
+
+    // Function to generate random distance between nodes
+    private static void generateRandomDistances() {
+        distances = new int[numNodes][numNodes];
+        Random r = new Random();
+        for(int i = 0; i < numNodes; i++){
+            for(int j = i +1; j <  numNodes; j++){
+                int distance = r.nextInt(100) + 1;
+                distances[i][j] = distance;
+                distances[j][i] = distance;
+            }
+        }
     }
 
 }
